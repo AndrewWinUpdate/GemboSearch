@@ -1,0 +1,16 @@
+{
+  "mappings": {
+    "properties": {
+      "movie_id": { "type": "keyword" },
+      "clip_id": { "type": "keyword" },
+      "subtitles": {
+        "type": "nested",
+        "properties": {
+          "start_time": { "type": "text" },
+          "end_time": { "type": "text" },
+          "text": { "type": "text", "analyzer": "standard" }
+        }
+      }
+    }
+  }
+}
