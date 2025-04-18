@@ -11,7 +11,7 @@ es = Elasticsearch(
     verify_certs=False
 )
 
-def parse_srt(file_path):
+def parse_srt(file_path, rus_path, eng_path):
     subs = pysrt.open(file_path)
     parsed_subtitles = []
 
@@ -19,13 +19,15 @@ def parse_srt(file_path):
         parsed_subtitles.append({
             "start_time": str(sub.start),
             "end_time": str(sub.end),
-            "text": sub.text.replace("\n", " ")
+            "text": sub.text.replace("\n", " "),
+            "path_to_rus_sub": rus_path,
+            "path_to_eng_sub": eng_path
         })
 
     return parsed_subtitles
 
-def index_clip(movie_id, clip_id, srt_path):
-    subtitles = parse_srt(srt_path)
+def index_clip(movie_id, clip_id, srt_path, path_to_rus_sub, path_to_eng_sub):
+    subtitles = parse_srt(srt_path, path_to_rus_sub, path_to_eng_sub)
 
     doc = {
         "movie_id": movie_id,

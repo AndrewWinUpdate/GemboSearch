@@ -8,6 +8,8 @@
         "properties": {
           "start_time": { "type": "text" },
           "end_time": { "type": "text" },
+          "path_to_rus_sub": { "type": "text"},
+          "path_to_eng_sub": { "type": "text"},
           "text": { "type": "text", "analyzer": "standard" }
         }
       }

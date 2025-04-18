@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Form
 import shutil
 import func
 
@@ -9,12 +9,18 @@ async def root():
     return {"message": "Hello, World!"}
 
 @app.post("/index_clip/")
-async def upload_clip(movie_id: str, clip_id: str, file: UploadFile = File(...)):
+async def upload_clip(
+    movie_id: str = Form(...),
+    clip_id: str = Form(...),
+    path_to_rus_sub: str = Form(...),
+    path_to_eng_sub: str = Form(...),
+    file: UploadFile = File(...)
+):
     file_path = f"temp_{clip_id}.srt"
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    func.index_clip(movie_id, clip_id, file_path)
+    func.index_clip(movie_id, clip_id, file_path, path_to_rus_sub, path_to_eng_sub)
     return {"status": "indexed", "clip_id": clip_id}
 
 @app.get("/search/")
